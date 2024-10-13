@@ -9,6 +9,7 @@ import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,8 +46,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(long id, UserDto userDto) {
-        List<User> userList = getAllUsers().stream().collect(Collectors.toList());
-        userList.remove(getUser(id));
+        List<User> userList = new ArrayList<>(getAllUsers());
+        User user = userRepository.getUser(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Пользователь " + id + "не найден"));
+        userList.remove(user);
         for (User user1 : userList) {
             if (user1.getEmail().equals(userDto.getEmail())) {
                 throw new BadRequestException("Пользователь с таким email уже существует");
