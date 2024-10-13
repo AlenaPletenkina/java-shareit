@@ -19,15 +19,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService service;
+    static final String userHeader = "X-Sharer-User-Id";
 
     @PostMapping
-    public ItemDto addItem(@RequestHeader("X-Sharer-User-Id") long userId, @Valid @RequestBody ItemDto item) {
+    public ItemDto addItem(@RequestHeader(userHeader) long userId, @Valid @RequestBody ItemDto item) {
         log.info("Получил POST запрос на создание вещи");
         return service.addItem(userId, item);
     }
 
     @PatchMapping("/{itemId}")
-    public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") long userId, @PathVariable long itemId,
+    public ItemDto updateItem(@RequestHeader(userHeader) long userId, @PathVariable long itemId,
                               @RequestBody ItemDto itemDto) {
         log.info("Получил PATCH запрос на обновление вещи");
         return service.updateItem(userId, itemId, itemDto);
@@ -40,7 +41,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAllItemsUser(@RequestHeader("X-Sharer-User-Id") long userId) {
+    public List<ItemDto> getAllItemsUser(@RequestHeader(userHeader) long userId) {
         log.info("Получил GET запрос на получение всех вещей пользователя с id: {}", userId);
         return service.getAllItemsUser(userId);
     }
