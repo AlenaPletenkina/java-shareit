@@ -4,7 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDtoRequest;
+import ru.practicum.shareit.item.dto.CommentDtoResponse;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemForBookingDto;
 import ru.practicum.shareit.item.services.ItemService;
 
 import java.util.List;
@@ -27,22 +30,30 @@ public class ItemController {
         return service.addItem(userId, item);
     }
 
-    @PatchMapping("/{itemId}")
-    public ItemDto updateItem(@RequestHeader(userHeader) long userId, @PathVariable long itemId,
+    @PostMapping("/{item-id}/comment")
+    public CommentDtoResponse addComment(@PathVariable("item-id") long itemId, @RequestHeader(userHeader) long userId,
+                                         @Valid @RequestBody CommentDtoRequest commentDtoRequest) {
+        log.info("POST запрос на создание вещи");
+        return service.addComment(itemId, userId, commentDtoRequest);
+    }
+
+    @PatchMapping("/{item-id}")
+    public ItemDto updateItem(@RequestHeader(userHeader) long userId, @PathVariable("item-id") long itemId,
                               @RequestBody ItemDto itemDto) {
         log.info("Получил PATCH запрос на обновление вещи");
         return service.updateItem(userId, itemId, itemDto);
     }
 
-    @GetMapping("/{itemId}")
-    public ItemDto getItem(@PathVariable long itemId) {
-        log.info("Получил GET запрос на получение вещи с id: {}", itemId);
-        return service.getItemDto(itemId);
+    @GetMapping("/{item-id}")
+    public ItemForBookingDto getItem(@RequestHeader(userHeader) Long ownerId,
+                                     @PathVariable("item-id") Long itemId) {
+        log.info("GET запрос на получение вещи с ID: {}", itemId);
+        return service.getItemDto(ownerId, itemId);
     }
 
     @GetMapping
-    public List<ItemDto> getAllItemsUser(@RequestHeader(userHeader) long userId) {
-        log.info("Получил GET запрос на получение всех вещей пользователя с id: {}", userId);
+    public List<ItemForBookingDto> getAllItemsUser(@RequestHeader(userHeader) long userId) {
+        log.info("GET запрос на получение всех вещей пользователя с ID: {}", userId);
         return service.getAllItemsUser(userId);
     }
 
