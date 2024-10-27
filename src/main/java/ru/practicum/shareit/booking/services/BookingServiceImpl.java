@@ -110,7 +110,7 @@ public class BookingServiceImpl implements BookingService {
                 result = bookingRepository.findAllWaitingBookingsByBooker(userId, Status.WAITING);
                 break;
             case REJECTED:
-                result = bookingRepository.findAllRegectedBookingsByBooker(userId, Status.REJECTED, Status.CANCELED);
+                result = bookingRepository.findAllBookingsByBooker(userId, Status.REJECTED, Status.CANCELED);
                 break;
         }
 
@@ -128,7 +128,7 @@ public class BookingServiceImpl implements BookingService {
 
         switch (stateBooking) {
             case ALL:
-                result = bookingRepository.findAllBookingsByOwner(userId);
+                result = bookingRepository.findAllBookingsOwner(userId);
                 break;
             case CURRENT:
                 result = bookingRepository.findAllCurrentBookingsByOwner(userId, now);
@@ -143,7 +143,7 @@ public class BookingServiceImpl implements BookingService {
                 result = bookingRepository.findAllWaitingBookingsByOwner(userId, Status.WAITING);
                 break;
             case REJECTED:
-                result = bookingRepository.findAllRegectedBookingsByOwner(userId, Status.REJECTED, Status.CANCELED);
+                result = bookingRepository.findAllBookingsByOwner(userId, Status.REJECTED, Status.CANCELED);
                 break;
         }
 

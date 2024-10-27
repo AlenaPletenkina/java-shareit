@@ -89,7 +89,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                     "and b.status = ?2 " +
                     "or b.status = ?3 " +
                     "order by b.start DESC")
-    List<Booking> findAllRegectedBookingsByBooker(
+    List<Booking> findAllBookingsByBooker(
             Long userId,
             Status status, Status st);
 
@@ -97,7 +97,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             ("select b from Booking b " +
                     "where b.item.owner.id = ?1 " +
                     "order by b.start DESC")
-    List<Booking> findAllBookingsByOwner(
+    List<Booking> findAllBookingsOwner(
             Long userId);
 
     @Query
@@ -143,7 +143,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                     "and b.status = ?2 " +
                     "or b.status = ?3 " +
                     "order by b.start DESC")
-    List<Booking> findAllRegectedBookingsByOwner(
+    List<Booking> findAllBookingsByOwner(
             Long userId,
             Status status, Status st);
 }

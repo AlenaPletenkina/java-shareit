@@ -30,29 +30,29 @@ public class ItemController {
         return service.addItem(userId, item);
     }
 
-    @PostMapping("/{itemId}/comment")
-    public CommentDtoResponse addComment(@PathVariable long itemId, @RequestHeader("X-Sharer-User-Id") long userId,
+    @PostMapping("/{item-id}/comment")
+    public CommentDtoResponse addComment(@PathVariable("item-id") long itemId, @RequestHeader(userHeader) long userId,
                                          @Valid @RequestBody CommentDtoRequest commentDtoRequest) {
         log.info("POST запрос на создание вещи");
         return service.addComment(itemId, userId, commentDtoRequest);
     }
 
-    @PatchMapping("/{itemId}")
-    public ItemDto updateItem(@RequestHeader(userHeader) long userId, @PathVariable long itemId,
+    @PatchMapping("/{item-id}")
+    public ItemDto updateItem(@RequestHeader(userHeader) long userId, @PathVariable("item-id") long itemId,
                               @RequestBody ItemDto itemDto) {
         log.info("Получил PATCH запрос на обновление вещи");
         return service.updateItem(userId, itemId, itemDto);
     }
 
-    @GetMapping("/{itemId}")
-    public ItemForBookingDto getItem(@RequestHeader("X-Sharer-User-Id") Long ownerId,
-                                     @PathVariable Long itemId) {
+    @GetMapping("/{item-id}")
+    public ItemForBookingDto getItem(@RequestHeader(userHeader) Long ownerId,
+                                     @PathVariable("item-id") Long itemId) {
         log.info("GET запрос на получение вещи с ID: {}", itemId);
         return service.getItemDto(ownerId, itemId);
     }
 
     @GetMapping
-    public List<ItemForBookingDto> getAllItemsUser(@RequestHeader("X-Sharer-User-Id") long userId) {
+    public List<ItemForBookingDto> getAllItemsUser(@RequestHeader(userHeader) long userId) {
         log.info("GET запрос на получение всех вещей пользователя с ID: {}", userId);
         return service.getAllItemsUser(userId);
     }
