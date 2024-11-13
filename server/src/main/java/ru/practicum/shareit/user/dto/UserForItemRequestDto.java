@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserForItemRequestDto {
     private Long id;
-    private String itemName;
+    private String name;
 }

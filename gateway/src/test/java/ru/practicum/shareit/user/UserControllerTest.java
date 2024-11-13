@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.ShareItGateway;
 import ru.practicum.shareit.user.client.UserClient;
-import ru.practicum.shareit.user.controller.UserController;
 import ru.practicum.shareit.user.dto.UserDtoRequest;
 
 import java.nio.charset.StandardCharsets;
@@ -27,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@SpringBootTest(classes= ShareItGateway.class)
+@SpringBootTest(classes = ShareItGateway.class)
 public class UserControllerTest {
 
     @Autowired
@@ -39,7 +37,7 @@ public class UserControllerTest {
 
     @Test
     void addUserTest() throws Exception {
-        UserDtoRequest userDto = new UserDtoRequest(1L, "Ash", "ash@gmail.com");
+        UserDtoRequest userDto = new UserDtoRequest(1L, "Alena", "alena@gmail.com");
         String userJson = objectMapper.writeValueAsString(userDto);
         ResponseEntity<Object> response = new ResponseEntity<>(userJson, HttpStatus.OK);
         when(userClient.postUser(any())).thenReturn(response);
@@ -59,7 +57,7 @@ public class UserControllerTest {
 
     @Test
     void addUserWrongEmailTest() throws Exception {
-        UserDtoRequest userDto = new UserDtoRequest(1L, "Ash", "gmail.com");
+        UserDtoRequest userDto = new UserDtoRequest(1L, "Alena", "gmail.com");
         String userJson = objectMapper.writeValueAsString(userDto);
         ResponseEntity<Object> response = new ResponseEntity<>(userJson, HttpStatus.OK);
         when(userClient.postUser(any())).thenReturn(response);
@@ -75,7 +73,7 @@ public class UserControllerTest {
                 .getResponse()
                 .getContentAsString();
         verify(userClient, never()).postUser(any());
-        userJson = objectMapper.writeValueAsString(new UserDtoRequest(null, "Misty", null));
+        userJson = objectMapper.writeValueAsString(new UserDtoRequest(null, "Nasty", null));
         response = new ResponseEntity<>(userJson, HttpStatus.OK);
         when(userClient.postUser(any())).thenReturn(response);
         mockMvc.perform(
@@ -94,8 +92,8 @@ public class UserControllerTest {
 
     @Test
     void testPathUser() throws Exception {
-        UserDtoRequest userDto = new UserDtoRequest(1L, "Ash", "ash@gmail.com");
-        UserDtoRequest userDtoUpdate = new UserDtoRequest(1L, "Misty", "misty@gmail.com");
+        UserDtoRequest userDto = new UserDtoRequest(1L, "Alena", "alena@gmail.com");
+        UserDtoRequest userDtoUpdate = new UserDtoRequest(1L, "Nasty", "nasty@gmail.com");
         String userJson = objectMapper.writeValueAsString(userDtoUpdate);
         ResponseEntity<Object> response = new ResponseEntity<>(userJson, HttpStatus.OK);
         when(userClient.patchUser(any(), anyLong())).thenReturn(response);

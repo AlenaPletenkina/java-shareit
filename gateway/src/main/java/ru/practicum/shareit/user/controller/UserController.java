@@ -2,7 +2,6 @@ package ru.practicum.shareit.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -23,31 +22,31 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Object> addUser(@RequestBody @Validated({Create.class}) UserDtoRequest userDto) {
-        log.info("Creating user {}", userDto);
+        log.info("POST запрос на создание пользователя {}", userDto);
         return userClient.postUser(userDto);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUser(@PathVariable Long userId) {
-        log.info("Get user userId={}", userId);
+    @GetMapping("/{user-id}")
+    public ResponseEntity<Object> getUser(@PathVariable("user-id") Long userId) {
+        log.info("GET запрос на получение пользователя userId={}", userId);
         return userClient.getUser(userId);
     }
 
     @GetMapping
     public ResponseEntity<Object> getAll() {
-        log.info("Get all users");
+        log.info("GET запрос на получение всех пользователей");
         return userClient.getAllUsers();
     }
 
-    @PatchMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@RequestBody UserDtoRequest userDto, @PathVariable long userId) {
-        log.info("Patch /userId userId={}, userDto={}", userId, userDto);
+    @PatchMapping("/{user-id}")
+    public ResponseEntity<Object> updateUser(@RequestBody UserDtoRequest userDto, @PathVariable("user-id") long userId) {
+        log.info("PATCH запрос на обновление пользователя userId={}, userDto={}", userId, userDto);
         return userClient.patchUser(userDto, userId);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable long userId) {
-        log.info("Delete user userId={}", userId);
+    @DeleteMapping("/{user-id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable("user-id") long userId) {
+        log.info("DELETE запрос на удаление пользователя userId={}", userId);
         return userClient.delete(userId);
     }
 }
