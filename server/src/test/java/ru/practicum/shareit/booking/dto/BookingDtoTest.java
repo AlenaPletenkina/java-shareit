@@ -10,8 +10,6 @@ import ru.practicum.shareit.item.dto.ItemWithBookingDto;
 import ru.practicum.shareit.user.dto.UserWithIdDto;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 

@@ -9,10 +9,6 @@ import ru.practicum.shareit.item.dto.ItemForItemRequestResponseDto;
 import ru.practicum.shareit.user.dto.UserForItemRequestDto;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-//import java.time.temporal.ChronoUnits;
-
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
