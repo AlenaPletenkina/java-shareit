@@ -21,10 +21,9 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @DataJpaTest
-@Disabled
 public class BookingRepositoryTest {
     @Autowired
-    private final BookingRepository bookingRepository = null;
+    private BookingRepository bookingRepository;
     @Autowired
     protected TestEntityManager entityManager;
 
