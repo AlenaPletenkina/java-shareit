@@ -193,7 +193,6 @@ public class BookingServiceImplTest {
 
     @SneakyThrows
     @Test
-    @Disabled
     void getAllBookingsTest() {
         BookingForResponse bookingDtoFromDB = bookingService.addBooking(secondTestUser.getId(), bookItemRequestDto);
         BookingForResponse bookingDtoFromDB2 = bookingService.addBooking(secondTestUser.getId(), secondBookItemRequestDto);
@@ -216,7 +215,6 @@ public class BookingServiceImplTest {
 
     @SneakyThrows
     @Test
-    @Disabled
     void getAllOwnerBookingsTest() {
         BookingForResponse bookingDtoFromDB = bookingService.addBooking(secondTestUser.getId(), bookItemRequestDto);
         BookingForResponse bookingDtoFromDB2 = bookingService.addBooking(secondTestUser.getId(), secondBookItemRequestDto);
