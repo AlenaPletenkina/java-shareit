@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking.repository;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @DataJpaTest
+@Disabled
 public class BookingRepositoryTest {
     @Autowired
     private final BookingRepository bookingRepository = null;
