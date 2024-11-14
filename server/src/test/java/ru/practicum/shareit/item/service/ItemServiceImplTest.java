@@ -44,6 +44,7 @@ class ItemServiceImplTest {
     LocalDateTime now = LocalDateTime.now();
     private final ItemService itemService;
     private final UserService userService;
+
     @Test
     void getItemWithBookingAndCommentTest() {
         CommentDtoRequest inputCommentDto = CommentDtoRequest.builder()
