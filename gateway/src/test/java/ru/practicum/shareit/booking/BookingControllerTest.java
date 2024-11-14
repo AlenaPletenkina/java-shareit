@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@SpringBootTest(classes= ShareItGateway.class)
+@SpringBootTest(classes = ShareItGateway.class)
 public class BookingControllerTest {
 
     @Autowired
