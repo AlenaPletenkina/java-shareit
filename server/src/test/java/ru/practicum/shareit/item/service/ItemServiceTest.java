@@ -27,6 +27,7 @@ import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.ItemRequestRepository;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
+import ru.practicum.shareit.user.services.UserServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -56,6 +57,8 @@ public class ItemServiceTest {
     private BookingRepository bookingRepository;
     @Mock
     private CommentDtoRequest commentDtoRequest;
+    @Mock
+    private UserServiceImpl userService;
     private final User owner = User.builder()
             .id(1L)
             .name("Misty")
@@ -431,5 +434,43 @@ public class ItemServiceTest {
             itemService.addComment(itemId, authorId, commentDto);
         });
         assertEquals("Вещь с ID 1 не зарегистрирован!", ex.getMessage());
+    }
+
+    @Test
+    void updateItemIfNotValidOwnerTest() {
+        Long userId = 1L;
+        Long itemId = 1L;
+        ItemDtoRequest itemDto = new ItemDtoRequest(1L,
+                "test_update",
+                "description_update",
+                true,
+                3L);
+        itemDto.setName("Спальный мешок для похода размер XXL");
+        assertThrows(ObjectNotFoundException.class, () -> {
+            itemService.updateItem(itemId, userId, itemDto);
+        }, "Вещь с ID 1 не зарегистрирован!");
+    }
+
+    @Test
+    public void testAddCommentSuccess() {
+        long itemId = 1L;
+        long userId = 2L;
+        String text = "Test comment";
+        CommentDtoRequest request = new CommentDtoRequest(text);
+
+        User user = new User();
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        when(itemRepository.findById(anyLong())).thenReturn(Optional.of(new Item()));
+        when(bookingRepository.checkValidateBookingsFromItemAndStatus(
+                anyLong(), anyLong(), eq(Status.APPROVED), any(LocalDateTime.class)))
+                .thenReturn(true);
+        when(commentRepository.save(any(Comment.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        CommentDtoResponse response = itemService.addComment(itemId, userId, request);
+
+        assertNotNull(response);
+        assertEquals(request.getText(), response.getText());
+
     }
 }

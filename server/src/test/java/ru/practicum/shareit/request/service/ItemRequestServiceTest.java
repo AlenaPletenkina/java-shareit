@@ -121,7 +121,6 @@ public class ItemRequestServiceTest {
         assertEquals(saveItemRequest.getCreated(), afterSave.get(0).getCreated());
         assertEquals(saveItemRequest.getDescription(), afterSave.get(0).getDescription());
     }
-
     @Test
     void addItemRequest_whenRequesterIdIsNull_returnNotFoundRecordInBDTest() {
         Long requesterId = 9991L;

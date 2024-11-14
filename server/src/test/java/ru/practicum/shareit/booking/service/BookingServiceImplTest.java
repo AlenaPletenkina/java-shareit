@@ -303,6 +303,7 @@ public class BookingServiceImplTest {
         assertEquals(pastBooking.getId(), firstBooking.getId());
     }
 
+
     @SneakyThrows
     @Test
     void getAllOwnerBookingsFutureStateTest() {
@@ -406,6 +407,7 @@ public class BookingServiceImplTest {
         assertThat(booking.getItem().getName(), equalTo(item.getName()));
     }
 
+    @Test
     void test(BookingForResponse booking, Status status, UserDto createdBooker, ItemDtoResponse itemDto) {
         assertThat(booking.getId(), equalTo(1L));
         assertThat(booking.getStart(), equalTo(bookingToCreate.getStart()));
