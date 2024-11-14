@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.exception.ObjectNotFoundException;
 import ru.practicum.shareit.item.dto.CommentDtoRequest;
 import ru.practicum.shareit.item.dto.CommentDtoResponse;
@@ -43,13 +41,6 @@ import static org.mockito.Mockito.when;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class ItemServiceImplTest {
-    @MockBean
-    private ItemRepository itemRepository;
-    @MockBean
-    private BookingRepository bookingRepository;
-
-    @MockBean
-    private UserRepository userRepository;
     LocalDateTime now = LocalDateTime.now();
     private final ItemService itemService;
     private final UserService userService;
