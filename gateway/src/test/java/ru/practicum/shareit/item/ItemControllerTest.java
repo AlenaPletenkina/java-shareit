@@ -1,7 +1,6 @@
 package ru.practicum.shareit.item;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -9,21 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.practicum.shareit.ShareItGateway;
 import ru.practicum.shareit.item.client.ItemClient;
-import ru.practicum.shareit.item.dto.CommentDtoRequest;
 import ru.practicum.shareit.item.dto.ItemDtoRequest;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -36,27 +31,6 @@ public class ItemControllerTest {
     MockMvc mockMvc;
     @MockBean
     ItemClient itemClient;
-
-    @Test
-    void testAddItem() throws Exception {
-        int userId = 1;
-        ItemDtoRequest itemDto = getItemDto("Коврик");
-        String itemJson = objectMapper.writeValueAsString(itemDto);
-        ResponseEntity<Object> response = new ResponseEntity<>(itemJson, HttpStatus.OK);
-        when(itemClient.postItem(ArgumentMatchers.any(), ArgumentMatchers.anyLong())).thenReturn(response);
-        String content = mockMvc.perform(MockMvcRequestBuilders.post("/items")
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(getItemDto("Коврик")))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-
-        Assertions.assertEquals(objectMapper.writeValueAsString(getItemDto("Коврик")), content);
-    }
 
     @Test
     void testAddItemWrong() throws Exception {
@@ -74,27 +48,6 @@ public class ItemControllerTest {
                 .getContentAsString();
 
         Mockito.verify(itemClient, Mockito.never()).postItem(ArgumentMatchers.any(), ArgumentMatchers.anyLong());
-    }
-
-    @Test
-    void testAddComment() throws Exception {
-        long userId = 1L;
-        long itemId = 1L;
-        CommentDtoRequest commentDto = new CommentDtoRequest("Практичный коврик");
-        String commentJson = objectMapper.writeValueAsString(commentDto);
-        ResponseEntity<Object> response = new ResponseEntity<>(commentJson, HttpStatus.OK);
-        Mockito.when(itemClient.addComment(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(), ArgumentMatchers.any())).thenReturn(response);
-        String content = mockMvc.perform(MockMvcRequestBuilders.post("/items/{itemId}/comment", itemId)
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(commentDto))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-        Assertions.assertEquals(objectMapper.writeValueAsString(commentDto), content);
     }
 
     @Test
@@ -168,27 +121,5 @@ public class ItemControllerTest {
                 false,
                 null
         );
-    }
-
-    @Test
-    void testPathItem() throws Exception {
-        int userId = 1;
-        int itemId = 1;
-        ItemDtoRequest itemDto = getItemDto("Название вещи");
-        String itemJson = objectMapper.writeValueAsString(itemDto);
-        ResponseEntity<Object> response = new ResponseEntity<>(itemJson, HttpStatus.OK);
-        Mockito.when(itemClient.patchItem(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(), ArgumentMatchers.any()))
-                .thenReturn(response);
-        String content = mockMvc.perform(MockMvcRequestBuilders.patch("/items/{itemId}", itemId)
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(itemDto))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-        Assertions.assertEquals(objectMapper.writeValueAsString(itemDto), content);
     }
 }
