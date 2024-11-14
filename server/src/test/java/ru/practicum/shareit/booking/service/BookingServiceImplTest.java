@@ -135,7 +135,7 @@ public class BookingServiceImplTest {
 
     @SneakyThrows
     @Test
-    void  testCheckRequest() {
+    void testCheckRequest() {
         ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class,
                 () -> itemService.addItem(user.getId(), itemavAilableFalseDto));
         assertEquals("Запрос не найден", ex.getMessage());
@@ -185,7 +185,7 @@ public class BookingServiceImplTest {
 
     @Test
     void getBookingByIdTestException() {
-        ObjectNotFoundException ex =  assertThrows(ObjectNotFoundException.class,
+        ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class,
                 () -> bookingService.getBooking(999L, 1L));
         assertEquals("Бронь с ID 999 не зарегистрирован!", ex.getMessage());
     }
@@ -405,16 +405,6 @@ public class BookingServiceImplTest {
         assertThat(booking.getBooker().getId(), equalTo(user.getId()));
         assertThat(booking.getItem().getId(), equalTo(item.getId()));
         assertThat(booking.getItem().getName(), equalTo(item.getName()));
-    }
-
-    @Test
-    void test(BookingForResponse booking, Status status, UserDto createdBooker, ItemDtoResponse itemDto) {
-        assertThat(booking.getId(), equalTo(1L));
-        assertThat(booking.getStart(), equalTo(bookingToCreate.getStart()));
-        assertThat(booking.getEnd(), equalTo(bookingToCreate.getEnd()));
-        assertThat(booking.getBooker().getId(), equalTo(createdBooker.getId()));
-        assertThat(booking.getItem().getId(), equalTo(itemDto.getId()));
-        assertThat(booking.getStatus(), equalTo(status));
     }
 
     @Test

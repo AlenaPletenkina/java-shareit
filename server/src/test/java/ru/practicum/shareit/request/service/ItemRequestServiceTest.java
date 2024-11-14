@@ -16,13 +16,10 @@ import ru.practicum.shareit.request.dto.ItemRequestResponseDto;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.services.ItemRequestService;
 import ru.practicum.shareit.user.dto.UserDto;
-
 import ru.practicum.shareit.user.dto.UserForItemRequestDto;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.services.UserService;
 
-//import javax.persistence.EntityManager;
-//import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.util.List;
 

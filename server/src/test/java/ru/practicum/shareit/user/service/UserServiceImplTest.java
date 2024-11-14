@@ -15,7 +15,6 @@ import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.services.UserService;
 
-//import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
