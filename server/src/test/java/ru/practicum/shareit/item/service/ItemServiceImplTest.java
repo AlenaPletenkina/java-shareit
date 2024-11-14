@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.exception.ObjectNotFoundException;
 import ru.practicum.shareit.item.dto.CommentDtoRequest;
 import ru.practicum.shareit.item.dto.CommentDtoResponse;
@@ -20,7 +22,6 @@ import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.item.services.ItemService;
 import ru.practicum.shareit.user.dto.UserDto;
-
 import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
@@ -42,9 +43,17 @@ import static org.mockito.Mockito.when;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class ItemServiceImplTest {
+    @MockBean
+    private ItemRepository itemRepository;
+    @MockBean
+    private BookingRepository bookingRepository;
+
+    @MockBean
+    private UserRepository userRepository;
     LocalDateTime now = LocalDateTime.now();
     private final ItemService itemService;
     private final UserService userService;
+
 
     @Test
     void getItemWithBookingAndCommentTest() {
@@ -149,5 +158,25 @@ class ItemServiceImplTest {
         ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class, () -> itemService.updateItem(user.getId(),
                 itemDtoRequest1.getId(), itemDtoRequest1));
         assertEquals("Вещь с ID 1 не зарегистрирован!", ex.getMessage());
+    }
+
+    @Test
+    public void testAddComment__authorNull_throwException() {
+        Long authorId = 5L;
+        Long itemId = 3L;
+        CommentDtoRequest commentDto = new CommentDtoRequest("Test comment");
+
+        ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class, () -> itemService.addComment(itemId, authorId, commentDto));
+        assertEquals("Вещь с ID 3 не зарегистрирован!", ex.getMessage());
+    }
+
+    @Test
+    public void testGetAllItemsUser() {
+        Long ownerId = 1L;
+        int from = -1;
+        int size = 10;
+
+        ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class, () -> itemService.getAllItemsUser(ownerId, from, size));
+        assertEquals("Пользователь с ID 1 не зарегистрирован!", ex.getMessage());
     }
 }

@@ -22,7 +22,6 @@ public class BookingDtoTest {
 
     @Test
     void testBookingForResponse() throws IOException {
-        //LocalDateTime dateTime = LocalDateTime.now();
 
         ItemWithBookingDto itemDto = ItemWithBookingDto.builder()
                 .id(1L)
@@ -36,8 +35,6 @@ public class BookingDtoTest {
 
         BookingForResponse bookingDto = BookingForResponse.builder()
                 .id(1L)
-               // .start(dateTime.plusMinutes(1))
-                //.end(dateTime.plusMinutes(2))
                 .item(itemDto)
                 .booker(userDto)
                 .status(Status.WAITING)
@@ -46,12 +43,6 @@ public class BookingDtoTest {
 
         assertThat(result).extractingJsonPathNumberValue("$.id")
                 .isEqualTo(1);
-        //assertThat(result).extractingJsonPathStringValue("$.start")
-               // .isEqualTo(dateTime.plusMinutes(1)
-                      //  .toString());
-        //assertThat(result).extractingJsonPathStringValue("$.end")
-               // .isEqualTo(dateTime.plusMinutes(2)
-                      //  .toString());
         assertThat(result).extractingJsonPathNumberValue("$.item.id")
                 .isEqualTo(1);
         assertThat(result).extractingJsonPathStringValue("$.item.name")
@@ -62,7 +53,6 @@ public class BookingDtoTest {
 
     @Test
     void testBookingDtoRequest() throws IOException {
-        //LocalDateTime dateTime = LocalDateTime.now();
 
         ItemWithBookingDto itemDto = ItemWithBookingDto.builder()
                 .id(1L)
@@ -70,19 +60,10 @@ public class BookingDtoTest {
                 .build();
 
         BookingDtoRequest bookingDto = BookingDtoRequest.builder()
-                //.start(dateTime.plusMinutes(1))
-               // .end(dateTime.plusMinutes(2))
                 .itemId(itemDto.getId())
                 .build();
         JsonContent<BookingDtoRequest> result = jsonBookingDtoRequest.write(bookingDto);
 
-
-        //assertThat(result).extractingJsonPathStringValue("$.start")
-            //    .isEqualTo(dateTime.plusMinutes(1)
-              //          .toString());
-       // assertThat(result).extractingJsonPathStringValue("$.end")
-               // .isEqualTo(dateTime.plusMinutes(2)
-                      //  .toString());
         assertThat(result).extractingJsonPathNumberValue("$.itemId")
                 .isEqualTo(1);
     }

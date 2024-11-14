@@ -116,7 +116,13 @@ public class ItemServiceImpl implements ItemService {
             throw new BadRequestException("Неверные параметры");
         }
         Comment comment = CommentMapper.toComment(commentDtoRequest, item, user);
-        return CommentMapper.toCommentDtoResponse(commentRepository.save(comment));
+        comment.setAuthor(user);
+        comment.setCreated(LocalDateTime.now());
+        comment.setItem(item);
+        comment = commentRepository.save(comment);
+
+        return new CommentDtoResponse(comment.getId(), comment.getText(),
+                comment.getAuthor().getName(), comment.getCreated());
     }
 
     private Item checkItem(long itemId) {
