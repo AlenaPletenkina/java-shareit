@@ -43,10 +43,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     @Transactional(readOnly = true)
     @Override
     public List<ItemRequestResponseDto> getItemRequestsByUserId(long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new ObjectNotFoundException("Пользователь с ID " +
-                    userId + " не зарегистрирован!");
-        }
+        cheсkUser(userId);
         List<ItemRequest> itemRequests = requestRepository.findItemRequestsByUserId(userId);
         for (ItemRequest itemRequest : itemRequests) {
             List<Item> items = itemRepository.findAllByRequestId(itemRequest.getId());
