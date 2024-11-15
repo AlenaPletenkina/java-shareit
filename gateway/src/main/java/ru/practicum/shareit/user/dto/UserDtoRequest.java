@@ -20,8 +20,7 @@ public class UserDtoRequest {
     @Pattern(regexp = "[a-zA-Zа-яА-Я\\s]*", groups = {Create.class, Update.class})
     private final String name;
     @NotEmpty(groups = {Create.class})
-    //@Email(groups = {Create.class, Update.class})
-    @Email(message = "Email имеет некорректный формат")
+    @Email(groups = {Create.class, Update.class})
     private final String email;
 
     @Override
