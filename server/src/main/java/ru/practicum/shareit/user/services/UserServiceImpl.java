@@ -4,15 +4,12 @@ package ru.practicum.shareit.user.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.shareit.exception.BadRequestException;
-import ru.practicum.shareit.exception.ObjectForbiddenException;
 import ru.practicum.shareit.exception.ObjectNotFoundException;
-import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.mapper.UserMapper;
+import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 
-import java.rmi.ServerError;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
