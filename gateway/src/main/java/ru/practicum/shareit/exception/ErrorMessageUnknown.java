@@ -1,10 +1,13 @@
 package ru.practicum.shareit.exception;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @RequiredArgsConstructor
 @Getter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ErrorMessageUnknown {
-    private final String error;
+    final String error;
 }

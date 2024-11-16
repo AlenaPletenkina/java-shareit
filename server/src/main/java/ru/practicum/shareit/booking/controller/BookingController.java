@@ -19,6 +19,7 @@ import java.util.List;
 public class BookingController {
     private final BookingService service;
     static final String userHeader = "X-Sharer-User-Id";
+    static final String path = "/{booking-id}";
 
     @PostMapping
     public BookingForResponse addBooking(@RequestHeader(userHeader) long userId,
@@ -27,14 +28,14 @@ public class BookingController {
         return service.addBooking(userId, bookingDtoRequest);
     }
 
-    @PatchMapping("/{booking-id}")
+    @PatchMapping(path)
     public BookingForResponse updateBooking(@PathVariable("booking-id") long bookingId, @RequestHeader(userHeader) long userId,
                                             @RequestParam Boolean approved) {
         log.info("PATCH запрос на обновление бронирования");
         return service.updateBooking(bookingId, userId, approved);
     }
 
-    @GetMapping("/{booking-id}")
+    @GetMapping(path)
     public BookingForResponse getBooking(@PathVariable("booking-id") long bookingId, @RequestHeader(userHeader) long userId) {
         log.info("GET запрос на получение бронирования");
         return service.getBooking(bookingId, userId);

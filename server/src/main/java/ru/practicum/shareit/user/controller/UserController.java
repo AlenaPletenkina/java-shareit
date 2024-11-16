@@ -14,6 +14,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
+    static final String path = "/{user-id}";
 
     @GetMapping
     public Collection<UserDto> getAll() {
@@ -21,7 +22,7 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping("/{user-id}")
+    @GetMapping(path)
     public UserDto getUser(@PathVariable("user-id") long userId) {
         log.info("GET запрос на получение пользователя");
         return service.getUser(userId);
@@ -33,13 +34,13 @@ public class UserController {
         return service.createUser(userDtoRequest);
     }
 
-    @PatchMapping("/{user-id}")
+    @PatchMapping(path)
     public UserDto updateUser(@PathVariable("user-id") long userId, @RequestBody UserDto userDtoRequest) {
         log.info("PATCH запрос на обновление пользователя");
         return service.updateUser(userId, userDtoRequest);
     }
 
-    @DeleteMapping("/{user-id}")
+    @DeleteMapping(path)
     public void deleteUser(@PathVariable("user-id") long userId) {
         log.info("DELETE запрос на удаление пользователя с ID: {}", userId);
         service.deleteUser(userId);

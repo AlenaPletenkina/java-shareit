@@ -26,7 +26,7 @@ public class ItemController {
 
     private final ItemClient itemClient;
     static final String userHeader = "X-Sharer-User-Id";
-
+    static final String path = "/{item-id}";
     @PostMapping
     public ResponseEntity<Object> addItem(@RequestHeader(userHeader) Long userId,
                                           @RequestBody @Validated({Create.class}) ItemDtoRequest itemDto) {
@@ -42,7 +42,7 @@ public class ItemController {
         return itemClient.addComment(itemId, userId, commentDto);
     }
 
-    @PatchMapping("/{item-id}")
+    @PatchMapping(path)
     public ResponseEntity<Object> updateItem(@RequestBody ItemDtoRequest itemDto,
                                              @RequestHeader(userHeader) Long userId,
                                              @PathVariable("item-id") long itemId) {
@@ -50,7 +50,7 @@ public class ItemController {
         return itemClient.patchItem(userId, itemId, itemDto);
     }
 
-    @GetMapping("/{item-id}")
+    @GetMapping(path)
     public ResponseEntity<Object> getItem(@PathVariable("item-id") Long itemId,
                                           @RequestHeader(userHeader) Long ownerId) {
         log.info("GET запрос на получение вещи itemId={}, ownerId={}", itemId, ownerId);

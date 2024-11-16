@@ -19,6 +19,7 @@ import ru.practicum.shareit.validation.Create;
 public class UserController {
 
     private final UserClient userClient;
+    static final String path = "/{user-id}";
 
     @PostMapping
     public ResponseEntity<Object> addUser(@RequestBody @Validated({Create.class}) UserDtoRequest userDto) {
@@ -26,7 +27,7 @@ public class UserController {
         return userClient.postUser(userDto);
     }
 
-    @GetMapping("/{user-id}")
+    @GetMapping(path)
     public ResponseEntity<Object> getUser(@PathVariable("user-id") Long userId) {
         log.info("GET запрос на получение пользователя userId={}", userId);
         return userClient.getUser(userId);
@@ -38,13 +39,13 @@ public class UserController {
         return userClient.getAllUsers();
     }
 
-    @PatchMapping("/{user-id}")
+    @PatchMapping(path)
     public ResponseEntity<Object> updateUser(@RequestBody UserDtoRequest userDto, @PathVariable("user-id") long userId) {
         log.info("PATCH запрос на обновление пользователя userId={}, userDto={}", userId, userDto);
         return userClient.patchUser(userDto, userId);
     }
 
-    @DeleteMapping("/{user-id}")
+    @DeleteMapping(path)
     public ResponseEntity<Object> deleteUser(@PathVariable("user-id") long userId) {
         log.info("DELETE запрос на удаление пользователя userId={}", userId);
         return userClient.delete(userId);

@@ -22,6 +22,7 @@ import ru.practicum.shareit.exception.UnsupportedStatusException;
 public class BookingController {
     private final BookingClient bookingClient;
     static final String userHeader = "X-Sharer-User-Id";
+    static final String path = "/{booking-id}";
 
     @PostMapping
     public ResponseEntity<Object> addBooking(@RequestHeader(userHeader) long userId,
@@ -30,7 +31,7 @@ public class BookingController {
         return bookingClient.addBooking(userId, requestDto);
     }
 
-    @PatchMapping("/{booking-id}")
+    @PatchMapping(path)
     public ResponseEntity<Object> updateBooking(@PathVariable("booking-id") Long bookingId,
                                                 @RequestHeader(userHeader) Long ownerId,
                                                 @RequestParam(name = "approved") boolean approved) {
@@ -38,7 +39,7 @@ public class BookingController {
         return bookingClient.updateBooking(bookingId, ownerId, approved);
     }
 
-    @GetMapping("/{booking-id}")
+    @GetMapping(path)
     public ResponseEntity<Object> getBooking(@RequestHeader(userHeader) long userId,
                                              @PathVariable("booking-id") Long bookingId) {
         log.info("GET запрос на получение бронирования с id={}, userId={}", bookingId, userId);

@@ -15,7 +15,7 @@ import java.util.List;
 public class ItemController {
     private final ItemService service;
     static final String userHeader = "X-Sharer-User-Id";
-
+    static final String path = "/{item-id}";
     @PostMapping
     public ItemDtoResponse addItem(@RequestHeader(userHeader) long userId,
                                    @RequestBody ItemDtoRequest itemDtoRequest) {
@@ -30,14 +30,14 @@ public class ItemController {
         return service.addComment(itemId, userId, commentDtoRequest);
     }
 
-    @PatchMapping("/{item-id}")
+    @PatchMapping(path)
     public ItemDtoResponse updateItem(@RequestBody ItemDtoRequest itemDtoRequest,
                                       @RequestHeader(userHeader) long userId, @PathVariable("item-id") long itemId) {
         log.info("PATCH запрос на обновление вещи");
         return service.updateItem(userId, itemId, itemDtoRequest);
     }
 
-    @GetMapping("/{item-id}")
+    @GetMapping(path)
     public ItemForBookingDto getItem(@RequestHeader(userHeader) Long ownerId,
                                      @PathVariable("item-id") Long itemId) {
         log.info("GET запрос на получение вещи с ID: {}", itemId);
