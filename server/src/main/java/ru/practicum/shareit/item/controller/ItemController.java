@@ -16,6 +16,7 @@ public class ItemController {
     private final ItemService service;
     static final String userHeader = "X-Sharer-User-Id";
     static final String path = "/{item-id}";
+
     @PostMapping
     public ItemDtoResponse addItem(@RequestHeader(userHeader) long userId,
                                    @RequestBody ItemDtoRequest itemDtoRequest) {
