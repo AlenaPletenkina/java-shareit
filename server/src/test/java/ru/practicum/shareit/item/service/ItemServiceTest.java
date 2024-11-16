@@ -69,7 +69,7 @@ public class ItemServiceTest {
             .build();
 
     @Test
-    void AddItemValidAddTest() {
+    void addItemValidAddTest() {
         Long ownerId = 1L;
         ItemDtoRequest itemDto = new ItemDtoRequest(null,
                 "1st Item",

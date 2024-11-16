@@ -135,7 +135,7 @@ public class BookingServiceImplTest {
 
     @SneakyThrows
     @Test
-    void CheckRequestTest() {
+    void checkRequestTest() {
         ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class,
                 () -> itemService.addItem(user.getId(), itemAvailableFalseDto));
         assertEquals("Запрос не найден", ex.getMessage());
@@ -357,7 +357,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void testToItemBookingForResponsePositiveTest() {
+    public void toItemBookingForResponsePositiveTest() {
         Booking booking = Booking.builder()
                 .id(1L)
                 .booker(User.builder().id(2L).build())
@@ -377,7 +377,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void testToItemBookingForResponseNegativeTest() {
+    public void toItemBookingForResponseNegativeTest() {
         Booking booking = Booking.builder()
                 .id(1L)
                 .booker(User.builder().id(2L).build())
@@ -434,7 +434,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void testToItemBookingInfoDtoPositiveTest() {
+    public void toItemBookingInfoDtoPositiveTest() {
         Booking booking = Booking.builder()
                 .id(1L)
                 .booker(User.builder().id(2L).build())
@@ -451,7 +451,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void testToItemBookingInfoDtoTest() {
+    public void toItemBookingInfoDtoTest() {
         Booking booking = Booking.builder()
                 .id(1L)
                 .booker(User.builder().id(2L).build())

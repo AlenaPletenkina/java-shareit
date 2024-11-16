@@ -58,7 +58,7 @@ class ItemRepositoryTest {
     }
 
     @Test
-    void SearchItemsByTextTest() {
+    void searchItemsByTextTest() {
         Pageable pageable = PageRequest.of(0, 10, Sort.unsorted());
         List<Item> itemList =
                 itemRepository.findByNameOrDescription("it", pageable).getContent();
