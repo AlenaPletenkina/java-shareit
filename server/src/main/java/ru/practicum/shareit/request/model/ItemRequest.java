@@ -25,8 +25,8 @@ public class ItemRequest {
     Long id;
     String description;
     @ManyToOne
-    User requester; // пользователь создавший запрос
-    LocalDateTime created; //дата и время создания запроса
+    User requester;
+    LocalDateTime created;
     @OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
     List<Item> items;
 }

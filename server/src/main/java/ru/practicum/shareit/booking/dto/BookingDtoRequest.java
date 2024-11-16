@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingDtoRequest {
-    private LocalDateTime start;
-    private LocalDateTime end;
-    private Long itemId;
+    LocalDateTime start;
+    LocalDateTime end;
+    Long itemId;
 }

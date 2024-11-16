@@ -14,38 +14,39 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService service;
+    static final String userHeader = "X-Sharer-User-Id";
 
     @PostMapping
-    public ItemDtoResponse addItem(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ItemDtoResponse addItem(@RequestHeader(userHeader) long userId,
                                    @RequestBody ItemDtoRequest itemDtoRequest) {
         log.info("POST запрос на создание вещи");
         return service.addItem(userId, itemDtoRequest);
     }
 
-    @PostMapping("/{itemId}/comment")
-    public CommentDtoResponse addComment(@PathVariable long itemId, @RequestHeader("X-Sharer-User-Id") long userId,
+    @PostMapping("/{item-id}/comment")
+    public CommentDtoResponse addComment(@PathVariable("item-id") long itemId, @RequestHeader(userHeader) long userId,
                                          @RequestBody CommentDtoRequest commentDtoRequest) {
         log.info("POST запрос на создание вещи");
         return service.addComment(itemId, userId, commentDtoRequest);
     }
 
-    @PatchMapping("/{itemId}")
+    @PatchMapping("/{item-id}")
     public ItemDtoResponse updateItem(@RequestBody ItemDtoRequest itemDtoRequest,
-                                      @RequestHeader("X-Sharer-User-Id") long userId, @PathVariable long itemId) {
+                                      @RequestHeader(userHeader) long userId, @PathVariable("item-id") long itemId) {
         log.info("PATCH запрос на обновление вещи");
         return service.updateItem(userId, itemId, itemDtoRequest);
     }
 
-    @GetMapping("/{itemId}")
-    public ItemForBookingDto getItem(@RequestHeader("X-Sharer-User-Id") Long ownerId,
-                                     @PathVariable Long itemId) {
+    @GetMapping("/{item-id}")
+    public ItemForBookingDto getItem(@RequestHeader(userHeader) Long ownerId,
+                                     @PathVariable("item-id") Long itemId) {
         log.info("GET запрос на получение вещи с ID: {}", itemId);
         return service.getItemDto(ownerId, itemId);
     }
 
     @GetMapping
     public List<ItemForBookingDto> getAllItemsUser(
-            @RequestHeader("X-Sharer-User-Id") long userId,
+            @RequestHeader(userHeader) long userId,
             @RequestParam(name = "from", defaultValue = "0") int from,
             @RequestParam(name = "size", defaultValue = "20") int size) {
         log.info("GET запрос на получение всех вещей пользователя с ID: {}", userId);

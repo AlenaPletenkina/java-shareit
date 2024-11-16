@@ -25,7 +25,7 @@ public class UserMapperTest {
 
     @Test
     void toUserModelTest() {
-        var original = new UserDto(1L, "Sakura", "sakura@mail.ru");
+        var original = new UserDto(1L, "Alena", "alena@mail.ru");
 
         var result = UserMapper.toUserModel(original);
 

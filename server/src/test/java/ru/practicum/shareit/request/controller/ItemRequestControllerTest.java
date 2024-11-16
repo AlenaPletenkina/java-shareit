@@ -33,11 +33,11 @@ public class ItemRequestControllerTest {
     @Autowired
     private MockMvc mockMvc;
     private ItemRequestDto itemRequestDto = ItemRequestDto.builder()
-            .description("allneeded")
+            .description("banana")
             .build();
-    private User user = new User(1L, "ash@gmail.com", "Ash");
+    private User user = new User(1L, "AlenA", "alena@gmail.com");
     private ItemRequestResponseDto itemRequestResponseDto = new ItemRequestResponseDto(1L,
-            "allneeded", new UserForItemRequestDto(user.getId(), user.getName()),
+            "banana", new UserForItemRequestDto(user.getId(), user.getName()),
             LocalDateTime.now(), List.of());
 
     @SneakyThrows

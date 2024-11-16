@@ -9,19 +9,20 @@ import org.springframework.boot.test.json.JsonContent;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 @JsonTest
 public class ItemRequestDtoTest {
     @Autowired
     private JacksonTester<ItemRequestDto> json;
 
     @Test
-    void testItemDto() throws IOException {
+    void itemDtoTest() throws IOException {
 
-        ItemRequestDto itemRequestDto = new ItemRequestDto("The Ball is the perfect solution");
+        ItemRequestDto itemRequestDto = new ItemRequestDto("Doll");
 
         JsonContent<ItemRequestDto> result = json.write(itemRequestDto);
 
         assertThat(result).extractingJsonPathStringValue("$.description")
-                .isEqualTo("The Ball is the perfect solution");
+                .isEqualTo("Doll");
     }
 }

@@ -18,44 +18,45 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookingController {
     private final BookingService service;
+    static final String userHeader = "X-Sharer-User-Id";
 
     @PostMapping
-    public BookingForResponse addBooking(@RequestHeader("X-Sharer-User-Id") long userId,
+    public BookingForResponse addBooking(@RequestHeader(userHeader) long userId,
                                          @RequestBody BookingDtoRequest bookingDtoRequest) {
-        log.info("POST запрос на создание брони");
+        log.info("POST запрос на создание бронирования");
         return service.addBooking(userId, bookingDtoRequest);
     }
 
-    @PatchMapping("/{bookingId}")
-    public BookingForResponse updateBooking(@PathVariable long bookingId, @RequestHeader("X-Sharer-User-Id") long userId,
+    @PatchMapping("/{booking-id}")
+    public BookingForResponse updateBooking(@PathVariable("booking-id") long bookingId, @RequestHeader(userHeader) long userId,
                                             @RequestParam Boolean approved) {
-        log.info("Patch запрос на обновление брони");
+        log.info("PATCH запрос на обновление бронирования");
         return service.updateBooking(bookingId, userId, approved);
     }
 
-    @GetMapping("/{bookingId}")
-    public BookingForResponse getBooking(@PathVariable long bookingId, @RequestHeader("X-Sharer-User-Id") long userId) {
-        log.info("Get запрос на получение брони");
+    @GetMapping("/{booking-id}")
+    public BookingForResponse getBooking(@PathVariable("booking-id") long bookingId, @RequestHeader(userHeader) long userId) {
+        log.info("GET запрос на получение бронирования");
         return service.getBooking(bookingId, userId);
     }
 
     @GetMapping
     public List<BookingForResponse> getAllBookingByUser(
             @RequestParam(defaultValue = "ALL") String state,
-            @RequestHeader("X-Sharer-User-Id") long userId,
+            @RequestHeader(userHeader) long userId,
             @RequestParam(name = "from", defaultValue = "0") int from,
             @RequestParam(name = "size", defaultValue = "20") int size) {
-        log.info("Get запрос на получение листа бронирования user с Id {} со статусом {}", userId, state);
+        log.info("GET запрос на получение списка бронирований user с Id {} со статусом {}", userId, state);
         return service.getAllBookingByUser(state, userId, from, size);
     }
 
     @GetMapping("/owner")
     public List<BookingForResponse> getAllBookingByOwner(
             @RequestParam(defaultValue = "ALL") String state,
-            @RequestHeader("X-Sharer-User-Id") long userId,
+            @RequestHeader(userHeader) long userId,
             @RequestParam(name = "from", defaultValue = "0") int from,
             @RequestParam(name = "size", defaultValue = "20") int size) {
-        log.info("Get запрос на получение бронирования броней owner с Id {} со статусом {}", userId, state);
+        log.info("GET запрос на получение бронирования  owner с Id {} со статусом {}", userId, state);
         return service.getAllBookingByOwner(state, userId, from, size);
     }
 }

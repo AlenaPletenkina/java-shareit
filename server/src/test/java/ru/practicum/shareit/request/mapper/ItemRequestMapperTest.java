@@ -36,7 +36,7 @@ public class ItemRequestMapperTest {
         owner = User.builder()
                 .id(2L)
                 .name("name owner 2")
-                .email("owner@jjgv.zw")
+                .email("owner@gmail.com")
                 .build();
 
         withIdDto1 = UserMapper.toUserWithIdDtoMapper(owner);

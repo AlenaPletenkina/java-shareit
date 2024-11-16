@@ -10,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.user.dto.UserDto;
-//import ru.practicum.shareit.user.dto.UserDtoResponse;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.services.UserService;
 
@@ -38,8 +37,8 @@ public class UserControllerTest {
 
     private static final String PATH_USERS = "/users";
     User user = User.builder()
-            .id(1L).name("Ani")
-            .email("ani@mail.ru")
+            .id(1L).name("Alena")
+            .email("alena@mail.ru")
             .build();
 
     UserDto userDtoRequest = UserDto.builder()

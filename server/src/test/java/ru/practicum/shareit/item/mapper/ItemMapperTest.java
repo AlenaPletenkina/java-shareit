@@ -18,7 +18,7 @@ public class ItemMapperTest {
         var original = new Item();
         original.setId(1L);
         original.setDescription("Description");
-        original.setName("Sakura");
+        original.setName("Alena");
         original.setRequest(null);
         original.setAvailable(true);
         var result = ItemMapper.toItemDtoResponse(original);
@@ -35,7 +35,7 @@ public class ItemMapperTest {
     void toNewItemTest() {
         var original = new ItemDtoRequest();
         original.setId(1L);
-        original.setName("Sakura");
+        original.setName("Alena");
         original.setDescription("Description");
         original.setAvailable(true);
         var result = ItemMapper.toItem(original);
@@ -52,25 +52,21 @@ public class ItemMapperTest {
     void toItemForBookingDtoTest() {
         var lastBooking = new BookingLastAndNextDto();
         lastBooking.setId(1L);
-        //lastBooking.setStart(LocalDateTime.now().minusWeeks(1));
-       // lastBooking.setEnd(LocalDateTime.now().minusDays(1));
         lastBooking.setBookerId(1L);
         var nextBooking = new BookingLastAndNextDto();
         nextBooking.setId(2L);
         nextBooking.setBookerId(1L);
-       // lastBooking.setStart(LocalDateTime.now());
-       // lastBooking.setEnd(LocalDateTime.now().plusWeeks(2));
         var comments = new ArrayList<CommentDtoResponse>();
         var comment = new CommentDtoResponse();
         comment.setId(1L);
         comment.setText("Cool");
-        comment.setAuthorName("Sakura");
+        comment.setAuthorName("Alena");
         comment.setCreated(LocalDateTime.now());
         comments.add(comment);
         var original = new Item();
         original.setId(1L);
         original.setDescription("Description");
-        original.setName("Sakura");
+        original.setName("Alena");
         original.setRequest(null);
         original.setAvailable(true);
         var result = ItemMapper.toItemForBookingDto(original, lastBooking, nextBooking, comments);
@@ -90,7 +86,7 @@ public class ItemMapperTest {
         var original = new Item();
         original.setId(1L);
         original.setDescription("Description");
-        original.setName("Sakura");
+        original.setName("Alena");
         original.setRequest(null);
         original.setAvailable(true);
         var result = ItemMapper.toItemForItemRequestResponseDto(original);
@@ -108,7 +104,7 @@ public class ItemMapperTest {
         var original = new Item();
         original.setId(1L);
         original.setDescription("Description");
-        original.setName("Sakura");
+        original.setName("Alena");
         original.setRequest(null);
         original.setAvailable(true);
         var items = new ArrayList<Item>();

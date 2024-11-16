@@ -25,7 +25,7 @@ public class BookingDtoTest {
 
         ItemWithBookingDto itemDto = ItemWithBookingDto.builder()
                 .id(1L)
-                .name("Sukiyaki")
+                .name("Alena")
                 .build();
 
 
@@ -46,7 +46,7 @@ public class BookingDtoTest {
         assertThat(result).extractingJsonPathNumberValue("$.item.id")
                 .isEqualTo(1);
         assertThat(result).extractingJsonPathStringValue("$.item.name")
-                .isEqualTo("Sukiyaki");
+                .isEqualTo("Alena");
         assertThat(result).extractingJsonPathNumberValue("$.booker.id")
                 .isEqualTo(1);
     }
@@ -56,7 +56,7 @@ public class BookingDtoTest {
 
         ItemWithBookingDto itemDto = ItemWithBookingDto.builder()
                 .id(1L)
-                .name("Sukiyaki")
+                .name("Alena")
                 .build();
 
         BookingDtoRequest bookingDto = BookingDtoRequest.builder()

@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class ItemRepositoryTest {
@@ -25,31 +26,30 @@ class ItemRepositoryTest {
     @Autowired
     UserRepository userRepository;
     User user;
-    Item item;
 
     @BeforeEach
     void setUp() {
         user = User.builder()
                 .name("userName1")
-                .email("test@mail.fg")
+                .email("test@mail.ru")
                 .build();
         userRepository.save(user);
         itemRepository.save(Item.builder()
                 .name("item1")
-                .description("item 1 Oh")
+                .description("item 1")
                 .available(true)
                 .owner(user)
                 .build());
         itemRepository.save(Item.builder()
-                .name("Boook")
-                .description("Soha")
+                .name("Doll")
+                .description("item 2")
                 .available(true)
                 .owner(user)
                 .build());
     }
 
     @Test
-    void testFindAllByOwnerOrderById() {
+    void findAllByOwnerOrderByIdTest() {
         List<Item> itemList = itemRepository
                 .findAllByOwnerIdOrderById(user.getId(), PageRequest.of(0, 2)).getContent();
 
@@ -58,17 +58,17 @@ class ItemRepositoryTest {
     }
 
     @Test
-    void testSearchItemsByText() {
+    void SearchItemsByTextTest() {
         Pageable pageable = PageRequest.of(0, 10, Sort.unsorted());
         List<Item> itemList =
-                itemRepository.findByNameOrDescription("oh", pageable).getContent();
+                itemRepository.findByNameOrDescription("it", pageable).getContent();
 
         assertNotNull(itemList);
         assertEquals(2, itemList.size());
     }
 
     @Test
-    public void testGetAllItems_withBlankText_shouldReturnEmptyList() {
+    public void getAllItemsWithBlankTextShouldReturnEmptyListTest() {
         String text = "text";
         Pageable page = PageRequest.of(0, 10);
 
@@ -77,7 +77,7 @@ class ItemRepositoryTest {
     }
 
     @Test
-    public void testFindByRequestIdIn() {
+    public void findByRequestIdInTest() {
         List<Item> actualResult = itemRepository.findByRequestIdIn(List.of(user.getId()));
 
         assertNotNull(actualResult);
@@ -85,10 +85,10 @@ class ItemRepositoryTest {
     }
 
     @Test
-    public void testFindAllByRequestId() {
+    public void findAllByRequestIdTest() {
         itemRepository.save(Item.builder()
-                .name("Cook")
-                .description("Soda")
+                .name("Banana")
+                .description("banana")
                 .available(true)
                 .owner(user)
                 .build());

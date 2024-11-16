@@ -18,36 +18,36 @@ public class UserDtoJsonTest {
     private JacksonTester<UserDto> jsonUserDtoRequest;
 
     @Test
-    void testItemDtoRequest() throws IOException {
+    void itemDtoRequestTest() throws IOException {
         UserDto userDtoRequest = UserDto.builder()
                 .id(1L)
-                .name("Sukiyaki")
-                .email("sukiyaki@mail.ru")
+                .name("Alena")
+                .email("alena@mail.ru")
                 .build();
         JsonContent<UserDto> result = jsonUserDtoRequest.write(userDtoRequest);
 
         assertThat(result).extractingJsonPathNumberValue("$.id")
                 .isEqualTo(1);
         assertThat(result).extractingJsonPathStringValue("$.name")
-                .isEqualTo("Sukiyaki");
+                .isEqualTo("Alena");
         assertThat(result).extractingJsonPathStringValue("$.email")
-                .isEqualTo("sukiyaki@mail.ru");
+                .isEqualTo("alena@mail.ru");
     }
 
     @Test
-    void testItemDtoResponse() throws IOException {
+    void itemDtoResponseTest() throws IOException {
         UserDto userDtoResponse = UserDto.builder()
                 .id(1L)
-                .name("Sukiyaki")
-                .email("sukiyaki@mail.ru")
+                .name("Alena")
+                .email("alena@mail.ru")
                 .build();
         JsonContent<UserDto> result = json.write(userDtoResponse);
 
         assertThat(result).extractingJsonPathNumberValue("$.id")
                 .isEqualTo(1);
         assertThat(result).extractingJsonPathStringValue("$.name")
-                .isEqualTo("Sukiyaki");
+                .isEqualTo("Alena");
         assertThat(result).extractingJsonPathStringValue("$.email")
-                .isEqualTo("sukiyaki@mail.ru");
+                .isEqualTo("alena@mail.ru");
     }
 }

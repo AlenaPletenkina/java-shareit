@@ -32,12 +32,12 @@ public class UserServiceUnitTest {
     @Mock
     private UserRepository repository;
 
-    private final User user = new User(1L, "Ask", "ask@mail.ru");
-    private final UserDto userDtoRequest = new UserDto(1L, "Ask", "ask@mail.ru");
-    private final UserDto userDtoResponse = new UserDto(1L, "Ask", "ask@mail.ru");
-    private final User user2 = new User(2L,  "Miy", "miy@yandex.ru");
-    private final UserDto userDtoRequest2 = new UserDto(2L, "Miy", "miy@yandex.ru");
-    private final UserDto userDtoResponse2 = new UserDto(2L, "Miy", "miy@yandex.ru");
+    private final User user = new User(1L, "Alena", "alena@mail.ru");
+    private final UserDto userDtoRequest = new UserDto(1L, "Alena", "alena@mail.ru");
+    private final UserDto userDtoResponse = new UserDto(1L, "Alena", "alena@mail.ru");
+    private final User user2 = new User(2L,  "Nasty", "nasty@yandex.ru");
+    private final UserDto userDtoRequest2 = new UserDto(2L, "Nasty", "nasty@yandex.ru");
+    private final UserDto userDtoResponse2 = new UserDto(2L, "Nasty", "nasty@yandex.ru");
 
 
     @Test
@@ -95,16 +95,16 @@ public class UserServiceUnitTest {
 
     @Test
     public void testToUserDto() {
-        User user = new User(1L, "Professor Oak", "ProfessorOak@gmail.com");
+        User user = new User(1L, "Sasha", "Sasha@gmail.com");
 
         UserDto userDto = UserMapper.toUserDtoResponse(user);
         assertEquals(1L, userDto.getId());
-        assertEquals("Professor Oak", userDto.getName());
-        assertEquals("ProfessorOak@gmail.com", userDto.getEmail());
+        assertEquals("Sasha", userDto.getName());
+        assertEquals("Sasha@gmail.com", userDto.getEmail());
 
         User user2 = UserMapper.toUserModel(userDtoRequest2);
         assertEquals(2L, user2.getId());
-        assertEquals("Miy", user2.getName());
-        assertEquals("miy@yandex.ru", user2.getEmail());
+        assertEquals("Nasty", user2.getName());
+        assertEquals("nasty@yandex.ru", user2.getEmail());
     }
 }

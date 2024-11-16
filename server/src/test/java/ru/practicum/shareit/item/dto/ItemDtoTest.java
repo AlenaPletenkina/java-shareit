@@ -21,8 +21,8 @@ public class ItemDtoTest {
     void testItemDtoRequest() throws IOException {
         ItemDtoRequest itemDtoRequest = ItemDtoRequest.builder()
                 .id(1L)
-                .name("ball")
-                .description("for playing with a ball")
+                .name("doll")
+                .description("for playing with a doll")
                 .available(true)
                 .build();
         JsonContent<ItemDtoRequest> result = jsonItemDtoRequest.write(itemDtoRequest);
@@ -30,17 +30,17 @@ public class ItemDtoTest {
         assertThat(result).extractingJsonPathNumberValue("$.id")
                 .isEqualTo(1);
         assertThat(result).extractingJsonPathStringValue("$.name")
-                .isEqualTo("ball");
+                .isEqualTo("doll");
         assertThat(result).extractingJsonPathStringValue("$.description")
-                .isEqualTo("for playing with a ball");
+                .isEqualTo("for playing with a doll");
     }
 
     @Test
     void testItemDtoResponse() throws IOException {
         ItemDtoResponse itemDtoResponse = ItemDtoResponse.builder()
                 .id(1L)
-                .name("ball")
-                .description("for playing with a ball")
+                .name("doll")
+                .description("for playing with a doll")
                 .available(true)
                 .build();
         JsonContent<ItemDtoResponse> result = json.write(itemDtoResponse);
@@ -48,8 +48,8 @@ public class ItemDtoTest {
         assertThat(result).extractingJsonPathNumberValue("$.id")
                 .isEqualTo(1);
         assertThat(result).extractingJsonPathStringValue("$.name")
-                .isEqualTo("ball");
+                .isEqualTo("doll");
         assertThat(result).extractingJsonPathStringValue("$.description")
-                .isEqualTo("for playing with a ball");
+                .isEqualTo("for playing with a doll");
     }
 }

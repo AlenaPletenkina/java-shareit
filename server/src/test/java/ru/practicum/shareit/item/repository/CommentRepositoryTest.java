@@ -33,7 +33,6 @@ public class CommentRepositoryTest {
     CommentRepository commentRepository;
     User user;
     User user1;
-    Item item;
     Item item3;
     Comment comment;
 
@@ -41,35 +40,35 @@ public class CommentRepositoryTest {
     void setUp() {
         user = User.builder()
                 .name("userName1")
-                .email("test@mail.fg")
+                .email("test@mail.ru")
                 .build();
         userRepositoryJpa.save(user);
         user1 = User.builder()
                 .name("userName2")
-                .email("test2@mail.fg")
+                .email("test2@mail.ru")
                 .build();
         userRepositoryJpa.save(user1);
         itemRepository.save(Item.builder()
                 .name("item1")
-                .description("item 1 Oh")
+                .description("item 1")
                 .available(true)
                 .owner(user)
                 .build());
         itemRepository.save(Item.builder()
-                .name("Boook")
-                .description("Soha")
+                .name("Doll")
+                .description("Barbie")
                 .available(true)
                 .owner(user)
                 .build());
         ItemRequest itemRequest = ItemRequest.builder()
                 .created(LocalDateTime.now().minusDays(1))
                 .requester(user1)
-                .description("test cock")
+                .description("test doll")
                 .build();
         itemRequestRepository.save(itemRequest);
         item3 = Item.builder()
-                .name("Cook")
-                .description("test cock")
+                .name("Baby doll")
+                .description("baby doll")
                 .available(true)
                 .owner(user)
                 .request(itemRequest)
@@ -77,7 +76,7 @@ public class CommentRepositoryTest {
         itemRepository.save(item3);
         itemRequest.setItems(List.of(item3));
         comment = Comment.builder()
-                .text("test cock - real cook")
+                .text("coll")
                 .author(itemRequest.getRequester())
                 .item(item3)
                 .created(LocalDateTime.now())
@@ -86,7 +85,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    void testFindAllByOwnerOrderById() {
+    void findAllByOwnerOrderByIdTest() {
         List<Comment> commentList = commentRepository.findByItemIn(List.of(item3), Sort.by(DESC, "created"));
 
         assertNotNull(commentList);

@@ -50,25 +50,25 @@ public class ItemControllerTest {
         owner = User.builder()
                 .id(1L)
                 .name("name user")
-                .email("mail@mall.nb")
+                .email("mail@mall.ru")
                 .build();
 
         booker = User.builder()
                 .id(101L)
                 .name("name booker")
-                .email("booker@email.com")
+                .email("booker@email.ru")
                 .build();
         itemRequest = ItemRequest.builder()
                 .id(1L)
-                .description("allneeded")
+                .description("doll")
                 .requester(booker)
                 .created(LocalDateTime.now())
                 .build();
 
         item = Item.builder()
                 .id(1L)
-                .name("vesch №1")
-                .description("opisanie veschi №1")
+                .name("Baby doll")
+                .description("baby doll for children")
                 .available(true)
                 .owner(owner)
                 .request(itemRequest)
@@ -187,7 +187,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    void testUpdate_whenAllAreOk_aAndReturnUpdatedItemTest() throws Exception {
+    void testUpdateWhenAllAreOkAndReturnUpdatedItemTest() throws Exception {
         when(itemService.updateItem(anyLong(), anyLong(), any(ItemDtoRequest.class)))
                 .thenReturn(itemDtoResponse);
 

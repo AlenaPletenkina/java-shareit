@@ -55,8 +55,8 @@ public class BookingServiceImplTest {
     private BookingDtoRequest secondBookItemRequestDto;
     User user;
     Item item;
-    private ItemDtoRequest itemavAilableFalseDto;
-    Item itemavAilableFalse;
+    private ItemDtoRequest itemAvailableFalseDto;
+    Item itemAvailableFalse;
 
     UserDto owner;
     UserDto booker;
@@ -67,38 +67,38 @@ public class BookingServiceImplTest {
     public void setUp() {
 
         ItemDtoRequest itemDto = ItemDtoRequest.builder()
-                .name("Poke Ball")
-                .description("The Poke Ball is a sphere")
+                .name("Doll")
+                .description("Barbie")
                 .available(true)
                 .build();
 
         UserDto userDto = UserDto.builder()
-                .name("Ash")
-                .email("ash@gmail.com")
+                .name("Alena")
+                .email("alena@gmail.com")
                 .build();
 
         UserDto secondUserDto = UserDto.builder()
-                .name("Misty")
-                .email("misty@gmail.com")
+                .name("Nasty")
+                .email("nasty@gmail.com")
                 .build();
 
         testUser = userService.createUser(userDto);
         user = User.builder()
                 .id(1L)
-                .name("Ash")
-                .email("ash@gmail.com")
+                .name("Alena")
+                .email("alena@gmail.com")
                 .build();
         secondTestUser = userService.createUser(secondUserDto);
         itemDtoFromDB = itemService.addItem(testUser.getId(), itemDto);
 
         item = Item.builder()
                 .id(1L)
-                .name("Poke Ball")
-                .description("The Poke Ball is a sphere")
+                .name("Doll")
+                .description("Barbie")
                 .available(true)
                 .owner(user)
                 .build();
-        itemavAilableFalseDto = ItemDtoRequest.builder()
+        itemAvailableFalseDto = ItemDtoRequest.builder()
                 .id(2L)
                 .name("Ball")
                 .description("description Ball")
@@ -106,7 +106,7 @@ public class BookingServiceImplTest {
                 .requestId(user.getId())
                 .build();
 
-        itemavAilableFalse = Item.builder()
+        itemAvailableFalse = Item.builder()
                 .id(2L)
                 .name("Ball")
                 .description("description Ball")
@@ -135,9 +135,9 @@ public class BookingServiceImplTest {
 
     @SneakyThrows
     @Test
-    void testCheckRequest() {
+    void CheckRequestTest() {
         ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class,
-                () -> itemService.addItem(user.getId(), itemavAilableFalseDto));
+                () -> itemService.addItem(user.getId(), itemAvailableFalseDto));
         assertEquals("Запрос не найден", ex.getMessage());
     }
 
@@ -205,7 +205,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    void getAllBookingsTestException() {
+    void getAllBookingsExceptionTest() {
         ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class,
                 () -> bookingService.getAllBookingByUser("ALL",
                         3L, 0, 3));
@@ -344,7 +344,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void checkDates_NegativeTestCaseTest() {
+    public void checkDatesNegativeTestCaseTest() {
         BookingDtoRequest bookingDto = BookingDtoRequest.builder()
                 .start(LocalDateTime.now().minusHours(2))
                 .end(LocalDateTime.now().minusHours(1))
@@ -421,12 +421,12 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    void addBookingItemavAilableFalseTest() {
+    void addBookingItemAvailableFalseTest() {
         UserDto createdBooker = userService.createUser(booker);
         BookingDtoRequest bookDto = new BookingDtoRequest(
                 LocalDateTime.now().plusHours(1),
                 LocalDateTime.now().plusHours(2),
-                itemavAilableFalse.getId()
+                itemAvailableFalse.getId()
         );
         Exception exception = assertThrows(ObjectNotFoundException.class, ()
                 -> bookingService.addBooking(createdBooker.getId(), bookDto));
@@ -468,7 +468,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void approve_withInvalidOwnerId_shouldThrowNotFoundExceptionTest() {
+    public void approveWithInvalidOwnerIdShouldThrowNotFoundExceptionTest() {
         Long ownerId = 3L;
         Long bookingId = 2L;
         boolean approved = true;
@@ -479,7 +479,7 @@ public class BookingServiceImplTest {
     }
 
     @Test
-    public void approve_withInvalidBookingId_shouldThrowNotFoundExceptionTest() {
+    public void approveWithInvalidBookingIdShouldThrowNotFoundExceptionTest() {
         Long ownerId = 1L;
         Long bookingId = 4L;
         boolean approved = true;

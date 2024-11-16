@@ -1,9 +1,7 @@
 package ru.practicum.shareit.booking.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
@@ -11,9 +9,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingForItemDto {
-    private Long id;
-    private Long bookerId;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    Long id;
+    Long bookerId;
+    LocalDateTime start;
+    LocalDateTime end;
 }

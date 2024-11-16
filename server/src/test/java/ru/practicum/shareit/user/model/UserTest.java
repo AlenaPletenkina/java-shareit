@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class UserTest {
     @Test
-    void testUserHashCode() {
+    void userHashCodeTest() {
         User user1 = User.builder()
                 .id(1L)
                 .name("name")
@@ -20,7 +20,7 @@ public class UserTest {
 
         User user3 = User.builder()
                 .id(1L)
-                .name("23")
+                .name("alena")
                 .email("user1@mail.ru").build();
 
         assertEquals(user1, user2);

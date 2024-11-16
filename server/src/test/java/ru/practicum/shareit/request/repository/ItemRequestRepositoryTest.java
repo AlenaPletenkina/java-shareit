@@ -29,42 +29,40 @@ public class ItemRequestRepositoryTest {
     UserRepository userRepository;
     User user;
     User user1;
-    Item item;
-    ItemRequest itemRequest;
 
     @BeforeEach
     void setUp() {
         user = User.builder()
                 .name("userName1")
-                .email("test@mail.fg")
+                .email("test@mail.ru")
                 .build();
         user1 = User.builder()
                 .name("userName2")
-                .email("test2@mail.fg")
+                .email("test2@mail.ru")
                 .build();
         userRepository.save(user);
         userRepository.save(user1);
         itemRepository.save(Item.builder()
                 .name("item1")
-                .description("item 1 Oh")
+                .description("item 1")
                 .available(true)
                 .owner(user)
                 .build());
         itemRepository.save(Item.builder()
-                .name("Boook")
-                .description("Soha")
+                .name("Doll")
+                .description("Barbie item")
                 .available(true)
                 .owner(user)
                 .build());
         itemRequestRepository.save(ItemRequest.builder()
-                .description("read book")
+                .description("Barbie item")
                 .requester(user1)
                 .created(LocalDateTime.now())
                 .build());
     }
 
     @Test
-    void testfindAllByNotRequesterId() {
+    void findAllByNotRequesterIdTest() {
         List<ItemRequest> itemRequests = itemRequestRepository
                 .findAllByNotRequesterId(user.getId(), PageRequest.of(0, 2)).getContent();
 
@@ -73,7 +71,7 @@ public class ItemRequestRepositoryTest {
     }
 
     @Test
-    void testFindAll() {
+    void findAllTest() {
         List<ItemRequest> itemRequests = itemRequestRepository
                 .findAll(PageRequest.of(0, 2)).getContent();
 
@@ -82,7 +80,7 @@ public class ItemRequestRepositoryTest {
     }
 
     @Test
-    public void testFindItemRequestsByUserIdt() {
+    public void findItemRequestsByUserIdTest() {
         List<ItemRequest> itemRequests = itemRequestRepository
                 .findItemRequestsByUserId(user1.getId());
 

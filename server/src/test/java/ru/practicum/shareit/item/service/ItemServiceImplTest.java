@@ -54,24 +54,24 @@ class ItemServiceImplTest {
         User owner2 = User.builder()
                 .id(2L)
                 .name("name for owner")
-                .email("owner2@aadmf.wreew")
+                .email("owner2@gmail.com")
                 .build();
 
         User userForTest2 = User.builder()
                 .id(1L)
                 .name("name user for test 2")
-                .email("userForTest2@ahd.ew")
+                .email("userForTest2@gmail.com")
                 .build();
 
-        Item zaglushka = Item.builder()
+        Item banana = Item.builder()
                 .id(1L)
-                .name("zaglushka")
-                .description("desc item zaglushka")
+                .name("banana")
+                .description("item Banana")
                 .owner(owner2).build();
 
         Booking bookingFromBd = Booking.builder()
                 .id(1L)
-                .item(zaglushka)
+                .item(banana)
                 .booker(userForTest2)
                 .start(now.minusDays(10))
                 .end(now.minusDays(5))
@@ -80,7 +80,7 @@ class ItemServiceImplTest {
         Item itemFromBd = Item.builder()
                 .id(1L)
                 .name("name for item")
-                .description("desc for item")
+                .description("for item")
                 .owner(owner2)
                 .available(true)
                 .build();
@@ -151,7 +151,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    public void testAddComment__authorNull_throwException() {
+    public void addCommentAuthorNullThrowExceptionTest() {
         Long authorId = 5L;
         Long itemId = 3L;
         CommentDtoRequest commentDto = new CommentDtoRequest("Test comment");
@@ -161,7 +161,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    public void testGetAllItemsUser() {
+    public void getAllItemsUserTest() {
         Long ownerId = 1L;
         int from = -1;
         int size = 10;

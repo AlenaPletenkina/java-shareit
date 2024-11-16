@@ -27,7 +27,6 @@ import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.ItemRequestRepository;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
-import ru.practicum.shareit.user.services.UserServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,14 +54,11 @@ public class ItemServiceTest {
     private CommentRepository commentRepository;
     @Mock
     private BookingRepository bookingRepository;
-    @Mock
-    private CommentDtoRequest commentDtoRequest;
-    @Mock
-    private UserServiceImpl userService;
+
     private final User owner = User.builder()
             .id(1L)
-            .name("Misty")
-            .email("Misty@gmail.com")
+            .name("Nasty")
+            .email("Nasty@gmail.com")
             .build();
     private final Item item = Item.builder()
             .id(1L)
@@ -73,7 +69,7 @@ public class ItemServiceTest {
             .build();
 
     @Test
-    void testAddItem_validAdd() {
+    void AddItemValidAddTest() {
         Long ownerId = 1L;
         ItemDtoRequest itemDto = new ItemDtoRequest(null,
                 "1st Item",
@@ -94,7 +90,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testGetAllItems_withBlankText_shouldReturnEmptyList() {
+    public void getAllItemsWithBlankTextShouldReturnEmptyListTest() {
         String text = "";
         Pageable page = PageRequest.of(0, 10);
         Page<Item> actualResult = itemRepository.findByNameOrDescription(text, page);
@@ -117,7 +113,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testUpdateItem_valid() {
+    public void updateItemValidTest() {
         Long ownerId = 1L;
         Long itemId = 2L;
         Long itemRequestId = 3L;
@@ -173,14 +169,14 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testGetItem() {
+    public void getItemTest() {
         Long itemId = 1L;
         Long userId = 2L;
-        User owner = new User(1L, "sah", "Kehum");
+        User owner = new User(1L, "sah", "Alena");
 
         when(itemRepository.findById(itemId))
-                .thenReturn(Optional.of(new Item(itemId, "Poke Ball",
-                        "The Poke Ball is a sphere",
+                .thenReturn(Optional.of(new Item(itemId, "Doll",
+                        "Barbie",
                         true,
                         owner,
                         null)));
@@ -193,8 +189,8 @@ public class ItemServiceTest {
 
         assertNotNull(result);
         assertEquals(itemId, result.getId());
-        assertEquals("Poke Ball", result.getName());
-        assertEquals("The Poke Ball is a sphere", result.getDescription());
+        assertEquals("Doll", result.getName());
+        assertEquals("Barbie", result.getDescription());
         assertTrue(result.getAvailable());
         assertNull(result.getLastBooking());
         assertNull(result.getNextBooking());
@@ -202,7 +198,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testUpdate_invalidOwnerId_throwsException() {
+    public void updateInvalidOwnerIdThrowsExceptionTest() {
         Long ownerId = 1L;
         Long itemId = 2L;
         ItemDtoRequest itemDto = new ItemDtoRequest(1L,
@@ -217,7 +213,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void failAddItem_invalidParamsTest() {
+    public void failAddItemInvalidParamsTest() {
         User owner = new User(1L, "test@gmail.com", "Tester");
 
         ItemDtoRequest newItem = new ItemDtoRequest(null,
@@ -246,7 +242,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testAddItemWithoutOwnerId() {
+    public void addItemWithoutOwnerIdTest() {
         ItemDtoRequest itemDto = new ItemDtoRequest(null,
                 "Item1",
                 "new item1",
@@ -261,11 +257,11 @@ public class ItemServiceTest {
     @Test
     public void shouldMapToCommentDtoListTest() {
         User owner = new User(1L,
-                "Ash@gmail.com",
-                "Ash");
+                "Alena",
+                "Alena@gmail.com");
         Item item = new Item(1L,
-                "Poke Ball",
-                "The Poke Ball is a sphere",
+                "Doll",
+                "Barbie",
                 true,
                 owner,
                 null);
@@ -284,19 +280,19 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testAddBookingAndComment() {
+    public void addBookingAndCommentTest() {
         User owner = new User(1L,
                 "test@gmail.com",
                 "Tester");
         Item item = Item.builder()
                 .id(1L)
-                .name("Poke Ball")
-                .description("The Poke Ball is a sphere")
+                .name("Doll")
+                .description("Barbie")
                 .owner(owner)
                 .build();
         List<Comment> comments = List.of(
-                new Comment(1L, "My 1st Poke Ball", item, owner, LocalDateTime.now()),
-                new Comment(2L, "Very compact", item, owner, LocalDateTime.now())
+                new Comment(1L, "Coll", item, owner, LocalDateTime.now()),
+                new Comment(2L, "Fine", item, owner, LocalDateTime.now())
         );
         List<Booking> bookings = List.of(
                 new Booking(1L,
@@ -330,7 +326,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testGetItem_invalid_throwsException() {
+    public void getItemInvalidThrowsExceptionTest() {
         Long itemId = 1L;
         Long userId = 2L;
         when(itemRepository.findById(itemId)).thenReturn(Optional.empty());
@@ -340,7 +336,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testGetItems_invalidOwnerId_throwsException() {
+    public void getItemsInvalidOwnerIdThrowsExceptionTest() {
         Long ownerId = -1L;
         int from = 0;
         int size = 10;
@@ -350,7 +346,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testGetItems_invalidValue_throwsException() {
+    public void getItemsInvalidValueThrowsExceptionTest() {
         Long ownerId = 1L;
         int from = -1;
         int size = 10;
@@ -360,31 +356,29 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testToItemDtoList() {
+    public void toItemDtoListTest() {
         List<Item> itemList = new ArrayList<>();
         itemList.add(new Item(1L,
-                "Poke Ball",
-                "The Poke Ball is a sphere",
+                "Doll",
+                "Barbie",
                 true,
                 null,
                 null));
         itemList.add(new Item(2L,
-                "Great Bal",
-                " is a type of Poké Ball that has a 50% higher chance to successfully " +
-                        "catch a Pokémon than that of a regular Poké Ball",
+                "Great Doll",
+                "Blue",
                 false,
                 null,
                 null));
         List<ItemDtoResponse> expectedResult = new ArrayList<>();
         expectedResult.add(new ItemDtoResponse(1L,
-                "Poke Ball",
-                "The Poke Ball is a sphere",
+                "Doll",
+                "Barbie",
                 true,
                 null));
         expectedResult.add(new ItemDtoResponse(2L,
-                "Great Bal",
-                " is a type of Poké Ball that has a 50% higher chance to successfully " +
-                        "catch a Pokémon than that of a regular Poké Ball",
+                "Great Doll",
+                "Blue",
                 false,
                 null));
         List<ItemDtoResponse> actualResult = itemList.stream()
@@ -394,7 +388,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void testToItemDtoList_EmptyList() {
+    public void toItemDtoListEmptyListTest() {
         List<Item> itemList = Collections.emptyList();
         List<ItemForItemRequestResponseDto> expectedResult = Collections.emptyList();
         List<ItemForItemRequestResponseDto> actualResult = ItemMapper.toItemForItemRequestsResponseDto(itemList);
@@ -404,14 +398,14 @@ public class ItemServiceTest {
     }
 
     @Test
-    void searchItemsByText_whenTextIsBlank() {
+    void searchItemsByTextWhenTextIsBlankTest() {
         List<ItemSearchOfTextDto> itemDtoList = itemService.getSearchOfText("", 0, 10);
 
         assertEquals(List.of(), itemDtoList);
     }
 
     @Test
-    public void testAddComment__authorNull_throwException() {
+    public void addCommentAuthorNullThrowExceptionTest() {
         Long authorId = 5L;
         Long itemId = 3L;
         CommentDtoRequest commentDto = new CommentDtoRequest("Test comment");
@@ -421,7 +415,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void addComment_itemNotFound_throwsExceptionTest() {
+    public void addCommentItemNotFoundThrowsExceptionTest() {
         Long authorId = 1L;
         Long itemId = 1L;
         CommentDtoRequest commentDto = new CommentDtoRequest();
@@ -445,14 +439,14 @@ public class ItemServiceTest {
                 "description_update",
                 true,
                 3L);
-        itemDto.setName("Спальный мешок для похода размер XXL");
+        itemDto.setName("Бочка для капусты");
         assertThrows(ObjectNotFoundException.class, () -> {
             itemService.updateItem(itemId, userId, itemDto);
         }, "Вещь с ID 1 не зарегистрирован!");
     }
 
     @Test
-    public void testAddCommentSuccess() {
+    public void addCommentSuccessTest() {
         long itemId = 1L;
         long userId = 2L;
         String text = "Test comment";

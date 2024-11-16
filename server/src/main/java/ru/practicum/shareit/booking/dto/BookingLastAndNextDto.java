@@ -11,6 +11,6 @@ import lombok.experimental.FieldDefaults;
 @Builder(toBuilder = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingLastAndNextDto {
-    private Long id;
-    private Long bookerId;
+    Long id;
+    Long bookerId;
 }

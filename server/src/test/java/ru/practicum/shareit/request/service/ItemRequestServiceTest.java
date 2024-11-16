@@ -55,11 +55,11 @@ public class ItemRequestServiceTest {
 
         userDtoRequest = UserDto.builder()
                 .name("name userDto1")
-                .email("userDto1@mans.gf")
+                .email("userDto1@mail.ru")
                 .build();
         userDtoRequest1 = UserDto.builder()
                 .name("name userDto2")
-                .email("userDto2@mans.gf")
+                .email("userDto2@mail.ru")
                 .build();
 
         owner1 = User.builder()
@@ -120,7 +120,7 @@ public class ItemRequestServiceTest {
     }
 
     @Test
-    void addItemRequest_whenRequesterIdIsNull_returnNotFoundRecordInBDTest() {
+    void addItemRequestWhenRequesterIdIsNullReturnNotFoundRecordInBDTest() {
         Long requesterId = 9991L;
         assertThrows(ObjectNotFoundException.class,
                 () -> itemRequestService.addItemRequest(requesterId, requestDto));
@@ -181,13 +181,13 @@ public class ItemRequestServiceTest {
     @Test
     void getItemRequestTest() {
         UserDto savedRequesterDto = userService.createUser(userDtoRequest1);
-        UserDto observer = userService.createUser(UserDto.builder().name("nablyudatel").email("1@re.hg").build());
+        UserDto alena = userService.createUser(UserDto.builder().name("alena").email("mail@ru").build());
 
         ItemRequestResponseDto savedItRequest =
                 itemRequestService.addItemRequest(savedRequesterDto.getId(), requestDto);
 
         ItemRequestResponseDto itRequestDtoFromDbObserver =
-                itemRequestService.getItemRequest(savedItRequest.getId(), observer.getId());
+                itemRequestService.getItemRequest(savedItRequest.getId(), alena.getId());
 
         assertNotNull(itRequestDtoFromDbObserver);
         assertEquals(savedItRequest.getId(), itRequestDtoFromDbObserver.getId());

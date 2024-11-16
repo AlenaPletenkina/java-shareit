@@ -9,39 +9,40 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 public class ItemRequestTest {
     User user = User.builder()
             .id(1L)
             .name("userName1")
-            .email("test@mail.fg")
+            .email("test@mail.ru")
             .build();
     Item item = Item.builder()
             .name("item1")
-            .description("item 1 Oh")
+            .description("item 1")
             .available(true)
             .owner(user)
             .build();
     ItemRequest itemRequest = ItemRequest.builder()
             .id(1L)
-            .description("read book")
+            .description("doll")
             .requester(user)
             .created(null)
             .build();
     ItemRequest itemRequest2 = ItemRequest.builder()
             .id(1L)
-            .description("read book")
+            .description("doll")
             .requester(user)
             .created(null)
             .build();
     ItemRequest itemRequest3 = ItemRequest.builder()
             .id(1L)
-            .description("ball")
+            .description("Blue")
             .requester(user)
             .created(LocalDateTime.now())
             .build();
 
     @Test
-    void testItemRequestHashCode() {
+    void itemRequestHashCodeTest() {
         assertEquals(itemRequest, itemRequest2);
         assertNotEquals(itemRequest, itemRequest3);
     }

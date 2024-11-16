@@ -10,9 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import ru.practicum.shareit.exception.ObjectNotFoundException;
 import ru.practicum.shareit.user.dto.UserDto;
-
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.services.UserService;
 
 import java.util.Collection;
@@ -30,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserServiceImplTest {
     private final UserService userService;
-    private final UserRepository userRepositoryJpa;
     UserDto userDto1;
     User user1;
     UserDto userDto2;
@@ -38,19 +35,18 @@ public class UserServiceImplTest {
     User userNull;
     UserDto userDtoNull;
     User userAllFieldsNull;
-    UserDto userDtoAllFieldsNull;
 
     @BeforeEach
     void setUp() {
         userDto1 = UserDto.builder()
                 .name("name userDto1")
-                .email("userDto1@mans.gf")
+                .email("userDto1@mail.ru")
                 .build();
         user1 = User.builder().id(userDto1.getId()).name(userDto1.getName()).email(userDto1.getEmail()).build();
 
         userDto2 = UserDto.builder()
                 .name("name userDto2")
-                .email("userDto2@mans.gf")
+                .email("userDto2@mail.ru")
                 .build();
         user2 = User.builder().id(userDto2.getId()).name(userDto2.getName()).email(userDto2.getEmail()).build();
 
@@ -62,7 +58,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void getUserById_WhenAllIsOkTest() {
+    void getUserByIdWhenAllIsOkTest() {
         UserDto savedUser = userService.createUser(userDto1);
 
         UserDto user = userService.getUser(savedUser.getId());
@@ -73,7 +69,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void getUserById_whenUserNotFoundInDb_returnTest() {
+    void getUserByIdWhenUserNotFoundInDbReturnTest() {
         UserDto savedUser = userService.createUser(userDto1);
 
         assertThrows(ObjectNotFoundException.class,
@@ -83,7 +79,7 @@ public class UserServiceImplTest {
     @SneakyThrows
     @Test
     void getAllUsersTest() {
-        List<UserDto> userDtos = List.of(userDto1, userDto2);
+        List<UserDto> userDtoList = List.of(userDto1, userDto2);
 
         userService.createUser(userDto1);
         userService.createUser(userDto2);
@@ -91,8 +87,8 @@ public class UserServiceImplTest {
 
         Collection<UserDto> result = userService.getAllUsers();
 
-        assertEquals(userDtos.size(), result.size());
-        for (UserDto user : userDtos) {
+        assertEquals(userDtoList.size(), result.size());
+        for (UserDto user : userDtoList) {
             assertThat(result, hasItem(allOf(
                     hasProperty("id", notNullValue()),
                     hasProperty("name", equalTo(user.getName())),
@@ -107,7 +103,6 @@ public class UserServiceImplTest {
         userService.createUser(userDto1);
 
         Collection<UserDto> users = userService.getAllUsers();
-        boolean result = false;
         Long id = users.stream()
                 .filter(u -> u.getEmail().equals(userDto1.getEmail()))
                 .findFirst()
@@ -122,7 +117,7 @@ public class UserServiceImplTest {
 
     @SneakyThrows
     @Test
-    void updateInStorage_whenAllIsOkAndNameIsNull_returnUpdatedUserTest() {
+    void updateInStorageWhenAllIsOkAndNameIsNullReturnUpdatedUserTest() {
         UserDto createdUser = userService.createUser(userDto1);
 
         Collection<UserDto> beforeUpdateUsers = userService.getAllUsers();
@@ -148,7 +143,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void updateInStorage_whenAllIsOkAndEmailIsNull_returnUpdatedUserTest() {
+    void updateInStorageWhenAllIsOkAndEmailIsNullReturnUpdatedUserTest() {
         UserDto createdUser = userService.createUser(userDto1);
 
         Collection<UserDto> beforeUpdateUsers = userService.getAllUsers();
@@ -174,7 +169,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void updateInStorage_whenAllIsOk_returnUpdatedUserTest() {
+    void updateInStorageWhenAllIsOkReturnUpdatedUserTest() {
         UserDto createdUser = userService.createUser(userDto1);
 
         Collection<UserDto> beforeUpdateUsers = userService.getAllUsers();
@@ -200,7 +195,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void updateInStorage_whenUserNotFound_returnNotFoundRecordInBDTest() {
+    void updateInStorageWhenUserNotFoundReturnNotFoundRecordInBDTest() {
         ObjectNotFoundException ex = assertThrows(ObjectNotFoundException.class, () ->
                 userService.updateUser(55L, userDto1));
         assertEquals("Пользователь с id " +

@@ -3,8 +3,6 @@ package ru.practicum.shareit.item.mapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.practicum.shareit.booking.dto.BookingDtoRequest;
-import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.item.dto.*;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
@@ -19,10 +17,9 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class CommentMapperTest {
     ItemRequest itemRequest1;
-    ItemRequest itemRequest2;
-    UserDto ownerDto1;
     User user;
     User owner;
     User owner1;
@@ -32,17 +29,12 @@ public class CommentMapperTest {
     User booker;
     UserDto userDtoForTest;
     User userForTest;
-    LocalDateTime now;
-    LocalDateTime nowPlus10min;
-    LocalDateTime nowPlus10hours;
     Item item1;
     ItemRequestDto itemDto1;
     ItemRequestDto itemRequestDto1;
     ItemSearchOfTextDto itemSearchOfTextDto;
     ItemForItemRequestResponseDto itemForItemRequestResponseDto;
     ItemWithBookingDto itemWithBookingDto;
-    Booking booking1;
-    BookingDtoRequest bookingDto1;
     CommentDtoRequest commentDto;
     ItemDtoRequest itemDtoRequest1;
 
@@ -63,28 +55,28 @@ public class CommentMapperTest {
 
         UserDto userDto2 = new UserDto(2L,
                 "name owner 2",
-                "owner@jjgv.zw"
+                "owner@gmail.com"
         );
 
         owner = User.builder()
                 .id(2L)
                 .name("name owner 2")
-                .email("owner@jjgv.zw")
+                .email("owner@gmail.com")
                 .build();
 
         requesterDto101 = UserForItemRequestDto.builder()
-                .name("name requesterDto101")
+                .name("name requesterDto")
                 .build();
 
         requester101 = User.builder()
                 .id(requesterDto101.getId())
                 .name(requesterDto101.getName())
-                .email("requesterDto101@mans.gf")
+                .email("requesterDto@gmail.com")
                 .build();
 
         userDtoForTest = UserDto.builder()
                 .name("name userDtoForTest")
-                .email("userDtoForTest@userDtoForTest.zx")
+                .email("userDtoForTest@gmail.com")
                 .build();
 
         userForTest = User.builder()
@@ -94,7 +86,7 @@ public class CommentMapperTest {
 
         bookerDto = UserDto.builder()
                 .name("booker")
-                .email("booker@wa.dzd")
+                .email("booker@gmail.com")
                 .build();
 
         booker = User.builder()

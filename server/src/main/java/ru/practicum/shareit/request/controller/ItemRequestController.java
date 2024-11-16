@@ -15,32 +15,33 @@ import java.util.List;
 @Slf4j
 public class ItemRequestController {
     private final ItemRequestService service;
+    static final String userHeader = "X-Sharer-User-Id";
 
     @PostMapping
-    public ItemRequestResponseDto addItemRequest(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ItemRequestResponseDto addItemRequest(@RequestHeader(userHeader) long userId,
                                                  @RequestBody ItemRequestDto itemRequestDto) {
         log.info("POST запрос на создание запроса вещи");
         return service.addItemRequest(userId, itemRequestDto);
     }
 
     @GetMapping
-    public List<ItemRequestResponseDto> getItemRequestsByUserId(@RequestHeader("X-Sharer-User-Id") long userId) {
+    public List<ItemRequestResponseDto> getItemRequestsByUserId(@RequestHeader(userHeader) long userId) {
         log.info("GET запрос на получение всех созданных запросов вещей пользователя с ID {}", userId);
         return service.getItemRequestsByUserId(userId);
     }
 
     @GetMapping("/all")
     public List<ItemRequestResponseDto> getAllItemRequests(
-            @RequestHeader("X-Sharer-User-Id") long userId,
+            @RequestHeader(userHeader) long userId,
             @RequestParam(name = "from", defaultValue = "0") int from,
             @RequestParam(name = "size", defaultValue = "20") int size) {
         log.info("GET запрос на получение всех запросов созданных другими пользователями");
         return service.getAllItemRequests(userId, from, size);
     }
 
-    @GetMapping("/{requestId}")
-    public ItemRequestResponseDto getItemRequest(@PathVariable long requestId,
-                                                 @RequestHeader("X-Sharer-User-Id") long userId) {
+    @GetMapping("/{request-id}")
+    public ItemRequestResponseDto getItemRequest(@PathVariable("request-id") long requestId,
+                                                 @RequestHeader(userHeader) long userId) {
         return service.getItemRequest(requestId, userId);
     }
 }
