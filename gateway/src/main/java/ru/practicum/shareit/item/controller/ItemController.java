@@ -27,6 +27,7 @@ public class ItemController {
     private final ItemClient itemClient;
     static final String userHeader = "X-Sharer-User-Id";
     static final String path = "/{item-id}";
+
     @PostMapping
     public ResponseEntity<Object> addItem(@RequestHeader(userHeader) Long userId,
                                           @RequestBody @Validated({Create.class}) ItemDtoRequest itemDto) {
